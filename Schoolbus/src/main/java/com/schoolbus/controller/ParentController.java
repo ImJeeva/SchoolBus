@@ -1,5 +1,6 @@
 package com.schoolbus.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ParentController {
     // ===== LOGIN =====
     @GetMapping("/parent/login")
     public String showLoginPage() {
-        return "login";
+        return "parent-login";
     }
 
     @PostMapping("/parent/login")
@@ -109,5 +110,61 @@ public class ParentController {
     public String deleteParent(@PathVariable("id") int id) {
         parentDAO.deleteParent(id);
         return "redirect:/admin/parent/list";
+    }
+  
+   
+    @GetMapping("/parent/attendance")
+    public String parentAttendanceHistory(HttpSession session, Model model) {
+        Parent sessionParent = (Parent) session.getAttribute("loggedInParent");
+        if (sessionParent == null) {
+            return "redirect:/parent/login";
+        }
+
+        // Re-fetch parent with children eagerly loaded
+        Parent parent = parentDAO.getParentWithChildren(sessionParent.getParentId());
+        
+        List<Student> children = parent.getStudents();
+        
+        List<Attendace> allRecords = new ArrayList<>();
+        for (Student child : children) {
+            List<Attendace> childRecords = attendaceDAO.getAttendanceByStudentId(child.getStudentId());
+            allRecords.addAll(childRecords);
+        }
+
+        allRecords.sort((a1, a2) -> a2.getScanTime().compareTo(a1.getScanTime()));
+
+        model.addAttribute("parent", parent);
+        model.addAttribute("children", children);
+        model.addAttribute("attendanceList", allRecords);
+        
+        return "parent-attendance-history";
+    }
+
+    // ===== VIEW SPECIFIC CHILD'S ATTENDANCE =====
+    @GetMapping("/child/{studentId}/attendance")
+    public String childAttendanceDetail(@PathVariable("studentId") int studentId,
+                                        HttpSession session,
+                                        Model model) {
+        Parent parent = (Parent) session.getAttribute("loggedInParent");
+        if (parent == null) {
+            return "redirect:/parent/login";
+        }
+
+        Student student = studentDAO.getStudentById(studentId);
+        
+        // Security check: verify this child belongs to logged-in parent
+        if (student.getParent() == null || 
+            student.getParent().getParentId() != parent.getParentId()) {
+            model.addAttribute("error", "Access denied");
+            return "redirect:/parent/dashboard";
+        }
+
+        List<Attendace> records = attendaceDAO.getAttendanceByStudentId(studentId);
+
+        model.addAttribute("parent", parent);
+        model.addAttribute("student", student);
+        model.addAttribute("attendanceList", records);
+        
+        return "child-attendance";
     }
 }

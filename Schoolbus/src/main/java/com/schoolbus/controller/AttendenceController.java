@@ -1,20 +1,29 @@
 package com.schoolbus.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.schoolbus.dao.AttendaceDAO;
 import com.schoolbus.dao.BusDAO;
 import com.schoolbus.dao.StudentDAO;
 import com.schoolbus.model.Attendace;
 import com.schoolbus.model.Bus;
+import com.schoolbus.model.Parent;
 import com.schoolbus.model.Student;
 import com.schoolbus.service.EmailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/attendance")
@@ -100,13 +109,37 @@ public class AttendenceController {
     }
 
     // ===== PARENT: View child's attendance =====
+ // ===== VIEW STUDENT ATTENDANCE (Parent & Admin) =====
     @GetMapping("/student/{studentId}")
     public String viewStudentAttendance(@PathVariable("studentId") int studentId,
+                                        HttpSession session,
                                         Model model) {
         Student student = studentDAO.getStudentById(studentId);
+        if (student == null) {
+            model.addAttribute("error", "Student not found");
+            return "redirect:/admin/dashboard";
+        }
+
         List<Attendace> list = attendaceDAO.getAttendanceByStudentId(studentId);
-        model.addAttribute("student",        student);
+        
+        // Check if parent is logged in (for parent portal)
+        Parent loggedParent = (Parent) session.getAttribute("loggedParent");
+        if (loggedParent != null) {
+            // Parent view - verify this is their child
+            if (student.getParent() == null || 
+                student.getParent().getParentId() != loggedParent.getParentId()) {
+                model.addAttribute("error", "Access denied");
+                return "redirect:/parent/dashboard";
+            }
+            model.addAttribute("parent", loggedParent);
+            model.addAttribute("student", student);
+            model.addAttribute("attendanceList", list);
+            return "child-attendance";  // Parent view JSP
+        }
+        
+        // Admin view
+        model.addAttribute("student", student);
         model.addAttribute("attendanceList", list);
-        return "child-attendance";
+        return "child-attendance";  // Same JSP works for both
     }
 }

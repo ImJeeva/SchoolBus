@@ -46,27 +46,56 @@ body{font-family:'Poppins',sans-serif;background:#0a0a1a;color:#fff;display:flex
 .topbar{position:relative;z-index:10;background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);border-bottom:1px solid rgba(66,153,225,0.1);padding:20px 36px;display:flex;align-items:center;justify-content:space-between;}
 .topbar-left h1{font-size:24px;font-weight:800;color:#fff;}
 .topbar-left p{font-size:13px;color:rgba(255,255,255,0.4);margin-top:2px;}
-.btn-back{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.6);font-size:13px;font-weight:500;text-decoration:none;transition:all 0.3s;}
-.btn-back:hover{border-color:rgba(66,153,225,0.4);color:#63b3ed;background:rgba(66,153,225,0.05);}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.record-badge{background:rgba(66,153,225,0.1);border:1px solid rgba(66,153,225,0.25);color:#63b3ed;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;}
 
 .page-body{padding:28px 36px;flex:1;position:relative;z-index:5;}
 
-/* Student info card */
-.student-card{background:rgba(255,255,255,0.03);border:1px solid rgba(66,153,225,0.2);border-left:4px solid #4299e1;border-radius:16px;padding:24px;margin-bottom:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;animation:fadeIn 0.4s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
-.info-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px 16px;}
-.info-label{font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
-.info-val{font-size:14px;font-weight:700;color:#fff;}
-.info-val.empty{color:rgba(255,255,255,0.2);font-style:italic;}
+/* Children filter buttons */
+.children-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+.child-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:rgba(255,255,255,0.5);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.3s;text-decoration:none;}
+.child-btn:hover{border-color:rgba(66,153,225,0.3);color:#63b3ed;background:rgba(66,153,225,0.05);}
+.child-btn.active{border-color:rgba(66,153,225,0.5);color:#fff;background:rgba(66,153,225,0.12);box-shadow:0 4px 14px rgba(66,153,225,0.2);}
+.child-btn.all-btn{border-color:rgba(255,193,7,0.3);color:#ffc107;}
+.child-btn.all-btn.active{border-color:rgba(255,193,7,0.5);background:rgba(255,193,7,0.12);}
 
-/* Table card */
+/* Summary cards */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.sum-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:all 0.3s;}
+.sum-card:hover{transform:translateY(-3px);border-color:rgba(66,153,225,0.2);}
+.sum-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.sum-card.sc-blue .sum-icon{background:rgba(66,153,225,0.15);}
+.sum-card.sc-green .sum-icon{background:rgba(72,187,120,0.15);}
+.sum-card.sc-yellow .sum-icon{background:rgba(255,193,7,0.15);}
+.sum-card.sc-red .sum-icon{background:rgba(245,101,101,0.15);}
+.sum-num{font-size:20px;font-weight:900;line-height:1;}
+.sum-card.sc-blue .sum-num{color:#63b3ed;}
+.sum-card.sc-green .sum-num{color:#68d391;}
+.sum-card.sc-yellow .sum-num{color:#ffc107;}
+.sum-card.sc-red .sum-num{color:#fc8181;}
+.sum-lbl{font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;}
+
+/* Search & Date filter */
+.filter-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:24px;}
+.search-box{position:relative;flex:1;min-width:250px;max-width:350px;}
+.search-box input{width:100%;padding:11px 16px 11px 42px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:11px;color:#fff;font-size:13px;font-family:'Poppins',sans-serif;outline:none;transition:all 0.3s;}
+.search-box input::placeholder{color:rgba(255,255,255,0.2);}
+.search-box input:focus{border-color:rgba(66,153,225,0.4);background:rgba(66,153,225,0.04);}
+.s-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;}
+.date-filter{display:flex;gap:8px;align-items:center;}
+.date-filter input{padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:13px;font-family:'Poppins',sans-serif;outline:none;color-scheme:dark;}
+.date-filter input:focus{border-color:rgba(66,153,225,0.4);}
+.btn-filter{padding:10px 18px;background:linear-gradient(135deg,#4299e1,#2b6cb0);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.3s;}
+.btn-filter:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(66,153,225,0.4);}
+
+/* Table */
 .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:20px;overflow:hidden;}
 .card-head{padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;}
 .card-head h3{font-size:15px;font-weight:700;color:#fff;}
-.count-badge{background:linear-gradient(135deg,#4299e1,#2b6cb0);color:#fff;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:800;}
+.count-badge{background:linear-gradient(135deg,#4299e1,#2b6cb0);color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:800;}
 
 table{width:100%;border-collapse:collapse;}
-thead th{padding:11px 16px;background:rgba(0,0,0,0.25);color:rgba(255,255,255,0.3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;text-align:left;}
+thead th{padding:11px 16px;background:rgba(0,0,0,0.25);color:rgba(255,255,255,0.3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;text-align:left;white-space:nowrap;}
 tbody td{padding:0;border-bottom:1px solid rgba(255,255,255,0.04);}
 tbody tr:last-child td{border-bottom:none;}
 tbody tr{transition:all 0.2s;animation:rowIn 0.3s ease forwards;}
@@ -75,6 +104,10 @@ tbody tr:hover{background:rgba(66,153,225,0.04);}
 .td-p{padding:13px 16px;}
 
 .row-num{font-size:11px;color:rgba(255,255,255,0.2);}
+.student-cell{display:flex;align-items:center;gap:10px;}
+.student-avatar{width:32px;height:32px;background:linear-gradient(135deg,#4299e1,#2b6cb0);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.student-name{font-size:13px;font-weight:700;color:#fff;}
+.student-class{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;}
 .date-cell{font-size:12px;color:rgba(255,255,255,0.5);}
 .time-cell{font-size:12px;color:rgba(255,255,255,0.4);font-family:monospace;}
 .bus-cell{font-size:12px;font-weight:700;color:#63b3ed;}
@@ -144,41 +177,85 @@ tbody tr:hover{background:rgba(66,153,225,0.04);}
 
 <div class="topbar">
 <div class="topbar-left">
-<h1>📋 ${student.name} — Attendance History</h1>
-<p>Complete boarding and drop-off records</p>
+<h1>📋 Attendance History — All Children</h1>
+<p>Complete boarding and drop-off records for all your children</p>
 </div>
-<a href="${pageContext.request.contextPath}/parent/dashboard" class="btn-back">← Back to Dashboard</a>
+<div class="topbar-right">
+<div class="record-badge">📊 ${attendanceList.size()} Total Records</div>
+</div>
 </div>
 
 <div class="page-body">
 
-<!-- Student info card -->
-<div class="student-card">
-<div class="info-item">
-<div class="info-label">👤 Student</div>
-<div class="info-val">${student.name}</div>
+<!-- Children filter buttons -->
+<div class="children-filter">
+<button class="child-btn all-btn active" onclick="filterByChild('all')">👥 All Children</button>
+<c:forEach var="child" items="${children}">
+<button class="child-btn" onclick="filterByChild(${child.studentId})" data-child-id="${child.studentId}">
+🎒 ${child.name}
+</button>
+</c:forEach>
 </div>
-<div class="info-item">
-<div class="info-label">📚 Class</div>
-<div class="info-val">${student.className} - ${student.section}</div>
-</div>
-<div class="info-item">
-<div class="info-label">🚌 Bus</div>
-<div class="info-val">
-<c:choose>
-<c:when test="${not empty student.bus}">${student.bus.busNumber}</c:when>
-<c:otherwise><span class="empty">Not assigned</span></c:otherwise>
-</c:choose>
+
+<!-- Summary cards -->
+<div class="summary-grid">
+<div class="sum-card sc-blue">
+<div class="sum-icon">📋</div>
+<div>
+<div class="sum-num">${attendanceList.size()}</div>
+<div class="sum-lbl">Total Scans</div>
 </div>
 </div>
-<div class="info-item">
-<div class="info-label">👨‍✈️ Driver</div>
-<div class="info-val">
-<c:choose>
-<c:when test="${not empty student.bus}">${student.bus.driverName}</c:when>
-<c:otherwise><span class="empty">—</span></c:otherwise>
-</c:choose>
+<div class="sum-card sc-green">
+<div class="sum-icon">🟢</div>
+<div>
+<div class="sum-num">
+<c:set var="boardCount" value="0"/>
+<c:forEach var="a" items="${attendanceList}">
+<c:if test="${a.eventType=='BOARDING'}"><c:set var="boardCount" value="${boardCount+1}"/></c:if>
+</c:forEach>
+${boardCount}
 </div>
+<div class="sum-lbl">Boardings</div>
+</div>
+</div>
+<div class="sum-card sc-yellow">
+<div class="sum-icon">🔵</div>
+<div>
+<div class="sum-num">
+<c:set var="dropCount" value="0"/>
+<c:forEach var="a" items="${attendanceList}">
+<c:if test="${a.eventType=='DROPOFF'}"><c:set var="dropCount" value="${dropCount+1}"/></c:if>
+</c:forEach>
+${dropCount}
+</div>
+<div class="sum-lbl">Dropoffs</div>
+</div>
+</div>
+<div class="sum-card sc-green">
+<div class="sum-icon">✉️</div>
+<div>
+<div class="sum-num">
+<c:set var="emailCount" value="0"/>
+<c:forEach var="a" items="${attendanceList}">
+<c:if test="${a.alertSent}"><c:set var="emailCount" value="${emailCount+1}"/></c:if>
+</c:forEach>
+${emailCount}
+</div>
+<div class="sum-lbl">Emails Sent</div>
+</div>
+</div>
+</div>
+
+<!-- Search & date filter -->
+<div class="filter-bar">
+<div class="search-box">
+<span class="s-icon">🔍</span>
+<input type="text" id="searchInput" placeholder="Search by student name, bus..." onkeyup="filterTable()"/>
+</div>
+<div class="date-filter">
+<span style="font-size:12px;color:rgba(255,255,255,0.4);">📅 Date:</span>
+<input type="date" id="dateFilter" onchange="filterTable()"/>
 </div>
 </div>
 
@@ -186,47 +263,65 @@ tbody tr:hover{background:rgba(66,153,225,0.04);}
 <div class="card">
 <div class="card-head">
 <h3>Scan Records</h3>
-<span class="count-badge">${attendanceList.size()} records</span>
+<span class="count-badge" id="visibleCount">${attendanceList.size()} records</span>
 </div>
-<table>
+<table id="attTable">
 <thead>
 <tr>
 <th>#</th>
+<th>Student</th>
 <th>Date</th>
 <th>Time</th>
 <th>Event</th>
 <th>Bus</th>
-<th>Email Sent</th>
+<th>Email</th>
 </tr>
 </thead>
 <tbody>
 <c:forEach var="att" items="${attendanceList}" varStatus="s">
-<tr style="animation-delay:${s.index * 0.03}s">
+<tr style="animation-delay:${s.index * 0.02}s" data-student-id="${att.student.studentId}">
+
 <td><div class="td-p"><span class="row-num">${s.count}</span></div></td>
+
+<td><div class="td-p">
+<div class="student-cell">
+<div class="student-avatar">🎒</div>
+<div>
+<div class="student-name">${att.student.name}</div>
+<div class="student-class">${att.student.className}-${att.student.section}</div>
+</div>
+</div>
+</div></td>
+
 <td><div class="td-p"><span class="date-cell">📅 <fmt:formatDate value="${att.scanTime}" pattern="dd-MM-yyyy"/></span></div></td>
+
 <td><div class="td-p"><span class="time-cell">🕐 <fmt:formatDate value="${att.scanTime}" pattern="hh:mm a"/></span></div></td>
+
 <td><div class="td-p">
 <c:choose>
 <c:when test="${att.eventType=='BOARDING'}"><span class="badge-board">🟢 BOARDING</span></c:when>
 <c:otherwise><span class="badge-drop">🔵 DROPOFF</span></c:otherwise>
 </c:choose>
 </div></td>
+
 <td><div class="td-p"><span class="bus-cell">🚌 ${att.bus.busNumber}</span></div></td>
+
 <td><div class="td-p">
 <c:choose>
 <c:when test="${att.alertSent}"><span class="badge-yes">✅ Sent</span></c:when>
 <c:otherwise><span class="badge-no">❌ No</span></c:otherwise>
 </c:choose>
 </div></td>
+
 </tr>
 </c:forEach>
 
 <c:if test="${empty attendanceList}">
-<tr><td colspan="6">
+<tr><td colspan="7">
 <div class="empty-state">
 <span class="empty-icon">📋</span>
 <div class="empty-title">No attendance records found</div>
-<div class="empty-sub">Records will appear here after driver scans QR code</div>
+<div class="empty-sub">Records will appear after driver scans student QR codes</div>
 </div>
 </td></tr>
 </c:if>
@@ -237,5 +332,94 @@ tbody tr:hover{background:rgba(66,153,225,0.04);}
 </div>
 </div>
 
+<script>
+var currentChildFilter = 'all';
+
+// Filter by child
+function filterByChild(childId){
+currentChildFilter = childId;
+
+// Update button states
+document.querySelectorAll('.child-btn').forEach(function(btn){
+btn.classList.remove('active');
+});
+event.target.classList.add('active');
+
+// Show/hide rows
+var rows = document.querySelectorAll('#attTable tbody tr');
+var visibleCount = 0;
+rows.forEach(function(row){
+var studentId = row.getAttribute('data-student-id');
+if(!studentId) return; // skip empty state row
+if(childId === 'all' || studentId == childId){
+row.style.display = '';
+visibleCount++;
+} else {
+row.style.display = 'none';
+}
+});
+
+// Update count badge
+document.getElementById('visibleCount').textContent = visibleCount + ' records';
+
+// Re-apply search/date filter
+filterTable();
+}
+
+// Search & date filter
+function filterTable(){
+var searchVal = document.getElementById('searchInput').value.toLowerCase();
+var dateVal = document.getElementById('dateFilter').value;
+
+var rows = document.querySelectorAll('#attTable tbody tr');
+var visibleCount = 0;
+
+rows.forEach(function(row){
+var studentId = row.getAttribute('data-student-id');
+if(!studentId) return; // skip empty row
+
+// Child filter
+if(currentChildFilter !== 'all' && studentId != currentChildFilter){
+row.style.display = 'none';
+return;
+}
+
+// Search filter
+var text = row.textContent.toLowerCase();
+if(searchVal && !text.includes(searchVal)){
+row.style.display = 'none';
+return;
+}
+
+// Date filter
+if(dateVal){
+var dateCell = row.cells[2].textContent;
+var rowDate = dateCell.match(/\d{2}-\d{2}-\d{4}/);
+if(rowDate){
+var parts = rowDate[0].split('-');
+var rowDateStr = parts[2] + '-' + parts[1] + '-' + parts[0]; // convert to yyyy-mm-dd
+if(rowDateStr !== dateVal){
+row.style.display = 'none';
+return;
+}
+}
+}
+
+row.style.display = '';
+visibleCount++;
+});
+
+document.getElementById('visibleCount').textContent = visibleCount + ' records';
+}
+
+// Row click highlight
+document.querySelectorAll('#attTable tbody tr').forEach(function(row){
+row.style.cursor = 'pointer';
+row.addEventListener('click', function(){
+document.querySelectorAll('#attTable tbody tr').forEach(function(r){ r.style.background = ''; });
+this.style.background = 'rgba(66,153,225,0.08)';
+});
+});
+</script>
 </body>
 </html>

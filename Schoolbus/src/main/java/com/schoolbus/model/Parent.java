@@ -37,7 +37,7 @@ public class Parent {
     private String address;
 
     // One parent can have multiple children
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Student> students;
 
     // ===== Constructors =====

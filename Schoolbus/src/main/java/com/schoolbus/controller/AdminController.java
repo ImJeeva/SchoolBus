@@ -49,7 +49,7 @@ public class AdminController {
             return "redirect:/admin/dashboard";
         } else {
             model.addAttribute("error", "Invalid admin credentials.");
-            return "login";
+            return "admin-login";
         }
     }
 

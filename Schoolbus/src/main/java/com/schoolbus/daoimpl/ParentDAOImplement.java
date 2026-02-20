@@ -27,6 +27,14 @@ public class ParentDAOImplement implements ParentDAO {
     public void updateParent(Parent parent) {
         sessionFactory.getCurrentSession().update(parent);
     }
+    
+    @Override
+    public Parent getParentWithChildren(int parentId) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Parent p LEFT JOIN FETCH p.students WHERE p.parentId = :pid", Parent.class)
+                .setParameter("pid", parentId)
+                .uniqueResult();
+    }
 
     @Override
     public void deleteParent(int parentId) {

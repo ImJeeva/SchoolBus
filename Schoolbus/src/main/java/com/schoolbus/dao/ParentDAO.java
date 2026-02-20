@@ -11,4 +11,5 @@ public interface ParentDAO {
     Parent getParentByEmail(String email);
     Parent loginParent(String email, String password);
     List<Parent> getAllParents();
+	Parent getParentWithChildren(int parentId);
 }

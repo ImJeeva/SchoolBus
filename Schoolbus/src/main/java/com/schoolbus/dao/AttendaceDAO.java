@@ -12,4 +12,5 @@ public interface AttendaceDAO {
     List<Attendace> getAttendanceByBusId(int busId);
     List<Attendace> getAttendanceByDate(Date date);
     Attendace getLastEventByStudentId(int studentId);
+    List<Attendace> getAttendanceByStudentIds(List<Integer> studentIds);
 }

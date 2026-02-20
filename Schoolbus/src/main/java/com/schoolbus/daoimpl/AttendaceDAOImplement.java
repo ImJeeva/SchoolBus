@@ -1,16 +1,17 @@
 package com.schoolbus.daoimpl;
 
-import com.schoolbus.dao.AttendaceDAO;
-import com.schoolbus.model.Attendace;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import com.schoolbus.dao.AttendaceDAO;
+import com.schoolbus.model.Attendace;
 
 @Repository
 @Transactional
@@ -36,6 +37,17 @@ public class AttendaceDAOImplement implements AttendaceDAO {
                 .getResultList();
     }
 
+    @Override
+    public List<Attendace> getAttendanceByStudentIds(List<Integer> studentIds) {
+        if (studentIds == null || studentIds.isEmpty()) {
+            return new ArrayList<>();
+        }
+        
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Attendace WHERE student.studentId IN :ids ORDER BY scanTime DESC", Attendace.class)
+                .setParameterList("ids", studentIds)
+                .getResultList();
+    }
     @Override
     public List<Attendace> getAttendanceByStudentId(int studentId) {
         return sessionFactory.getCurrentSession()
